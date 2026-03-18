@@ -1,9 +1,17 @@
 class Personagem:
     def __init__(self, nome, nivel = 1, xp = 0, vida = 100):
+        if not isinstance(nivel, int):
+            raise Exception("Nível deve ser inteiro.")
+        if not isinstance(xp, int):
+            raise Exception("XP deve ser inteiro.")
+        if not isinstance(vida, int):
+            raise Exception("Vida deve ser inteiro.")
+        
         self.nome = nome
-        self.nivel = nivel
-        self.xp = xp
-        self.vida = vida
+        self.__nivel = nivel
+        self.__xp = xp
+        self.__vida = vida
+        
     
     @property
     def nome(self):
@@ -27,23 +35,12 @@ class Personagem:
             raise Exception("Nome é obrigatório.")
         self.__nome = novoNome.title().strip()
 
-    @nivel.setter
-    def nivel(self, novoNivel: int):
-        if novoNivel < 0:
-            raise Exception("Nível inválido.")
-        self.__nivel = novoNivel
-
-    @xp.setter
-    def xp(self, novoXp: str):
-        if novoXp < 0:
-            raise Exception("Experiência inválida.")
-        self.__xp = novoXp
-
-    @vida.setter
-    def vida(self, novoVida: str):
-        if novoVida < 0 or novoVida > 100:
-            raise Exception("Vida inválida.")
-        self.__vida = novoVida
+    def exibir_dados(self):
+        print(f"PERSONAGEM: \nNome: {self.nome}\nNível: {self.nivel}\nExperiência: {self.xp}\nPontos de vida: {self.vida}\n")
+        
     
     def __str__(self):
-        return f"PERSONAGEM: \n\nNome: {self.nome}\nNível: {self.nivel}\nExperiência: {self.xp}\nPontos de vida: {self.vida}"
+        return f"PERSONAGEM: \n {self.nome} \n {self.nivel} \n {self.xp} \n {self.vida}"
+    
+    def __eq__(self, object2):
+        return self.nivel == object2.nivel
