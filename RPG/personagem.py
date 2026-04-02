@@ -40,7 +40,7 @@ class Personagem:
         
     
     def __str__(self):
-        return f"PERSONAGEM: \n {self.nome} \n {self.nivel} \n {self.xp} \n {self.vida}"
+        return f"PERSONAGEM: \nNome: {self.nome}\nNível: {self.nivel}\nExperiência: {self.xp}\nPontos de vida: {self.vida}\n"
     
     def __eq__(self, object2):
         return self.nivel == object2.nivel

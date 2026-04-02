@@ -1,25 +1,48 @@
 from personagem import Personagem
-from missao import Missao
-
-missao1 = Missao("Caça à monstros", "Encontre e elimine os monstros.", 15)
-missao2 = Missao("Coleta", "Encontre materiais.", 3, "em andamento")
+from missao import Missao, MissaoColeta, MissaoCombate, MissaoExploracao
 
 personagem1 = Personagem("Zen")
 personagem2 = Personagem("Mark")
 
-#print(personagem1, "\n\n", missao2, "\n\n", personagem2, "\n\n", missao1)
-personagem1.exibir_dados()
-personagem2.exibir_dados()
-missao1.exibir_dados()
-missao2.exibir_dados()
+print(personagem1)
+print(personagem2)
 
-if missao1.__eq__(missao2):
-    print(f"A missão de {missao1.nome}, tem a mesma recompensa que a missão {missao2.nome}")
-else:
-    print(f"A missão de {missao1.nome}, NÃO tem a mesma recompensa que a missão {missao2.nome}")
-    
-if personagem1.__eq__(personagem2):
-    print(f"O personagem {personagem1.nome}, tem o mesmo nível que o personagem {personagem2.nome}")
-else:
-    print(f"O personagem {personagem1.nome}, NÃO tem o mesmo nível que o personagem {personagem2.nome}")
-    
+Combate = MissaoCombate(
+    nome="Extermínio Sombrio",
+    descricao="Derrote criaturas corrompidas na floresta",
+    recompensa=25,
+    inimigo="Corrompido",
+    inimigos_a_derrotar=5
+)
+
+Exploracao = MissaoExploracao(
+    nome="Explorador de Arcadia",
+    descricao="Explore a região esquecida ao norte",
+    recompensa=30,
+    local="Ruínas Antigas",
+    distancia=12.5,
+    tempo_limite=60
+)
+
+Coleta = MissaoColeta(
+    nome="Coleta de Ervas",
+    descricao="Colete ervas medicinais raras",
+    recompensa=15,
+    item_necessario="Erva Lunar",
+    quantidade_item=10
+)
+
+print(Combate)
+Combate.iniciar_missao()
+Combate.concluir_missao()
+Combate.exibir_dados()
+
+print(Coleta)
+Coleta.iniciar_missao()
+Coleta.concluir_missao()
+Coleta.exibir_dados()
+
+print(Exploracao)
+Exploracao.iniciar_missao()
+Exploracao.concluir_missao()
+Exploracao.exibir_dados()
