@@ -1,6 +1,7 @@
 from status import Status
+from abc import ABC, abstractmethod
 
-class Missao:
+class Missao(ABC):
     def __init__(
         self, nome, descricao, recompensa: float, status = Status.PENDENTE
     ):
@@ -52,13 +53,16 @@ class Missao:
         self.__status: str = novoStatus
 
     def exibir_dados(self):
-        return f"{self.__class__.__name__}\nMISSÂO: \nNome: {self.nome}\nDescrição: {self.descricao}\nRecompensa: {self.recompensa} XP\nStatus: {self.status.value}\n"
+        return f"------ {self.__class__.__name__} ------\nMISSÂO: \nNome: {self.nome}\nDescrição: {self.descricao}\nRecompensa: {self.recompensa} XP\nStatus: {self.status.value}\n"
 
     def __str__(self):
-        return f"{self.__class__.__name__}\nMISSÂO: \nNome: {self.nome}\nDescrição: {self.descricao}\nRecompensa: {self.recompensa} XP\nStatus: {self.status.value}\n"
+        return f"------ {self.__class__.__name__} ------\nMISSÂO: \nNome: {self.nome}\nDescrição: {self.descricao}\nRecompensa: {self.recompensa} XP\nStatus: {self.status.value}\n"
 
     def __eq__(self, object2):
-        return self.recompensa == object2.recompensa
+        if not isinstance(object2, Missao):
+            return False
+        result = self.nome == object2.nome and self.descricao == object2.descricao and self.recompensa == object2.recompensa and self.status == object2.status
+        return result
 
     def iniciar_missao(self):
         if self.status == Status.PENDENTE:
@@ -66,11 +70,11 @@ class Missao:
             return f"A missão {self.nome} começou! Objetivo central da missão: {self.descricao}\n"
         else:
             raise Exception("ERROR: o status da missão deve ser pendente!")
-        
+    @abstractmethod
     def concluir_missao(self):
         if self.status == Status.EM_ANDAMENTO:
             self.status = Status.CONCLUIDA
-            return f"Missão concluída com sucesso. A contabilidade do prêmio de {self.recompensa} XP agora está pronta para retirada financeira\n"
+            return f"Missão '{self.nome}' concluída com sucesso. A contabilidade do prêmio de {self.recompensa} XP agora está pronta para retirada financeira\n"
         else:
             raise Exception("ERROR: o status da missão deve estar em andamento!")
 
@@ -115,14 +119,20 @@ class MissaoCombate(Missao):
             + f"Tipo inimigo: {self.inimigo}\nQuantidade de inimigos: {self.inimigo_a_derrotar}\n"
         )
     
+    def __eq__(self, object2):
+        if not isinstance(object2, Missao):
+            return False
+        result = self.nome == object2.nome and self.descricao == object2.descricao and self.recompensa == object2.recompensa and self.status == object2.status
+        return result
+    
     def concluir_missao(self, valor):
         if self.status == Status.EM_ANDAMENTO:
             if valor >= self.inimigo_a_derrotar:
                 self.status = Status.CONCLUIDA
-                return f"Missão concluída com sucesso. A contabilidade do prêmio de {self.recompensa} XP agora está pronta para retirada financeira\n"
+                return f"------ Conclusão de Missão ------\nMissão '{self.nome}' concluída com sucesso. A contabilidade do prêmio de {self.recompensa} XP agora está pronta para retirada financeira\n"
             else:
                 self.status = Status.FRACASSADA
-                return f"A missão {self.nome} foi fracassada.\n"
+                return f"------ Missão Fracassada ------\nA missão '{self.nome}' foi fracassada.\n"
         else:
             raise Exception("ERROR: o status da missão deve estar em andamento!")
 
@@ -166,15 +176,21 @@ class MissaoColeta(Missao):
             super().__str__()
             + f"Item necessário: {self.item_necessario}\nQuantidade necessária: {self.quantidade_item}\n"
         )
+    
+    def __eq__(self, object2):
+        if not isinstance(object2, Missao):
+            return False
+        result = self.nome == object2.nome and self.descricao == object2.descricao and self.recompensa == object2.recompensa and self.status == object2.status
+        return result
 
     def concluir_missao(self, valor):
         if self.status == Status.EM_ANDAMENTO:
             if valor >= self.quantidade_item:
                 self.status = Status.CONCLUIDA
-                return f"Missão concluída com sucesso. A contabilidade do prêmio de {self.recompensa} XP agora está pronta para retirada financeira\n"
+                return f"------ Conclusão de Missão ------\nMissão '{self.nome}' concluída com sucesso. A contabilidade do prêmio de {self.recompensa} XP agora está pronta para retirada financeira\n"
             else:
                 self.status = Status.FRACASSADA
-                return f"A missão {self.nome} foi fracassada.\n"
+                return f"------ Missão Fracassada ------\nA missão '{self.nome}' foi fracassada.\n"
         else:
             raise Exception("ERROR: o status da missão deve estar em andamento!")
 
@@ -235,9 +251,9 @@ class MissaoExploracao(Missao):
         if self.status == Status.EM_ANDAMENTO:
             if valor >= self.distancia:
                 self.status = Status.CONCLUIDA
-                return f"Missão concluída com sucesso. A contabilidade do prêmio de {self.recompensa} XP agora está pronta para retirada financeira\n"
+                return f"------ Conclusão de Missão ------\nMissão '{self.nome}' concluída com sucesso. A contabilidade do prêmio de {self.recompensa} XP agora está pronta para retirada financeira\n"
             else:
                 self.status = Status.FRACASSADA
-                return f"A missão {self.nome} foi fracassada.\n"
+                return f"------ Missão Fracassada ------\nA missão '{self.nome}' foi fracassada.\n"
         else:
             raise Exception("ERROR: o status da missão deve estar em andamento!")

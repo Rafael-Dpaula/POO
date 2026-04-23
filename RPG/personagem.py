@@ -1,18 +1,13 @@
 from status import Status
 class Personagem:
-    def __init__(self, nome, nivel = 1, xp = 0, vida = 100, missoes = []):
-        if not isinstance(nivel, int):
-            raise Exception("Nível deve ser inteiro.")
-        if not isinstance(xp, int):
-            raise Exception("XP deve ser inteiro.")
-        if not isinstance(vida, int):
-            raise Exception("Vida deve ser inteiro.")
-        
+    def __init__(self, nome):
         self.nome = nome
-        self.__nivel = nivel
-        self.__xp = xp
-        self.__vida = vida
-        self.__missoes = list(missoes)
+        self.__nivel = 1
+        self.__xp = 0
+        self.__vida = 100
+        self.__missoes = []
+        self.__ataque = 0
+        self.__inventario = []
         
     
     @property
@@ -35,6 +30,14 @@ class Personagem:
     def missoes(self):
         return self.__missoes
     
+    @property
+    def inventario(self):
+        return self.__inventario
+    
+    @property
+    def ataque(self):
+        return self.__ataque
+    
     @nome.setter
     def nome(self, novoNome: str):
         if novoNome is None:
@@ -42,11 +45,11 @@ class Personagem:
         self.__nome = novoNome.title().strip()
 
     def exibir_dados(self):
-        print(f"PERSONAGEM: \nNome: {self.__nome}\nNível: {self.__nivel}\nExperiência: {self.__xp}\nPontos de vida: {self.__vida}\nMissões: {[m.nome for m in self.__missoes]}\n")
+        print(f"------ PERSONAGEM ------ \nNome: {self.__nome}\nNível: {self.__nivel}\nExperiência: {self.__xp}\nPontos de vida: {self.__vida}\nMissões: {[m.nome for m in self.__missoes]}\n")
         
     
     def __str__(self):
-        return f"PERSONAGEM: \nNome: {self.__nome}\nNível: {self.__nivel}\nExperiência: {self.__xp}\nPontos de vida: {self.__vida}\nMissões: {[m.nome for m in self.__missoes]}\n"
+        return f"------ PERSONAGEM ------ \nNome: {self.__nome}\nNível: {self.__nivel}\nExperiência: {self.__xp}\nPontos de vida: {self.__vida}\nMissões: {[m.nome for m in self.__missoes]}\n"
     
     def __eq__(self, object2):
         return self.nivel == object2.nivel
@@ -55,8 +58,8 @@ class Personagem:
         if not any(m.nome == missao.nome for m in self.__missoes):
             self.__missoes.append(missao)
             missao.iniciar_missao()
-            return f"A missão {missao.nome} foi adicionada a lista de missões de {self.__nome}.\n"
-        return f"A missão {missao.nome} JÁ ESTÁ na lista de missões de {self.__nome}.\n"
+            return f"------ Missão Colocada na Lista ------\nA missão {missao.nome} foi adicionada a lista de missões de {self.__nome}.\n"
+        return f"------ Falha em Colocar Missão na Lista ------\nA missão {missao.nome} JÁ ESTÁ na lista de missões de {self.__nome}.\n"
 
     def concluir_missao(self, missao, valor):
         if any(m.nome == missao.nome for m in self.__missoes):
@@ -68,11 +71,13 @@ class Personagem:
                     while self.__xp >= 100:
                         self.__xp -= 100
                         self.__nivel += 1
-                        subiu = (f"\nO personagem {self.__nome} subíu para o nível {self.__nivel}\n")
+                        subiu = (f"\n------ SUBIDA DE NÍVEL ------\nO personagem {self.__nome} subíu para o nível {self.__nivel}\n")
                 self.__missoes.remove(missao)
-                return f"{missao.nome}: {resultado}{subiu}"
+                return f"{resultado}{subiu}"
             else:
-                return f"{missao.nome}: {resultado}"
+                self.__missoes.remove(missao)
+                self.__vida -= 10
+                return f"{resultado}"
         else:
-            return f"{missao.nome}: A missao '{missao.nome}' não foi encontrada no personagem {self.__nome}\n"
+            return f"------ Falha na Conclusão de Missão ------\n{missao.nome}: A missao '{missao.nome}' não foi encontrada no personagem {self.__nome}\n"
 

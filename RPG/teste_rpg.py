@@ -37,21 +37,39 @@ Coleta = MissaoColeta(
     item_necessario="Erva Lunar",
     quantidade_item=10
 )
+#testando listagem
+print(Combate)
+print(personagem1.add_missao(Combate))
 
-print(personagem1.add_missao(Combate))
+#testando mudaça de status
+print(Combate2)
+
+#adicionando mais na lista
 print(personagem1.add_missao(Combate2))
+
+#testando a adicionar 2 vez o mesmo
 print(personagem1.add_missao(Combate))
+
+#adicionando mais missoes
 print(personagem2.add_missao(Coleta))
 print(personagem1.add_missao(Exploracao))
 
+#testando se listou corretamente
 print(personagem1)
 print(personagem2)
 
+#teste de concusão e remoção da missao
 print(personagem1.concluir_missao(Combate, 5))
+print(Combate)
 print(personagem1)
+
+#teste de subida de nível
 print(personagem1.concluir_missao(Combate2, 20))
+
+#teste de aumento de xp
 print(personagem2.concluir_missao(Coleta, 8))
 print(personagem2.concluir_missao(Combate, 5))
 
+#exibição do personagem
 personagem1.exibir_dados()
 personagem2.exibir_dados()
