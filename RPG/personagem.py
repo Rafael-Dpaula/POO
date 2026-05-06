@@ -7,14 +7,14 @@ class Personagem:
         self.__xp = 0
         self.__vida = 20
         self.__missoes = []
-        self.__ataqueBase = 0
+        self.__ataqueBase = 10
         self.__inventario = []
         self.__arma = None
         self.__utilitario = None
         self.__vestimenta = None
 
         self.vidaBase = 20 #atributo que garante que buff de vida não seja cumulativo
-        
+        self.ataque = 10 #atributo que garante que buff de ataque não seja cumulativo
     
     @property
     def nome(self):
@@ -127,7 +127,7 @@ class Personagem:
         self.__vida = self.vidaBase + (efeitoVida/100)*self.vidaBase
         if self.__vida > 100:
             self.__vida = 100
-        self.__ataqueBase = efeitoDano
+        self.__ataqueBase = self.ataque + efeitoDano
         
     def add_Item(self, item):
         if not any(i.nome == item.nome for i in self.__inventario):
