@@ -1,6 +1,6 @@
 from enum import Enum
 
-class ItemTipo(Enum):
+class TipoItem(Enum):
     ARMA = "ARMA"
     VESTIMENTA = "VESTIMENTA"
     UTILITARIO = "UTILITÁRIO"

@@ -1,11 +1,11 @@
-from tipo_item import ItemTipo
+from tipo_item import TipoItem
 
 class Item:
-    def __init__ (self, nome, descricao, atributo, tipo = ""):
-        self.nome = nome
-        self.descricao = descricao
-        self.atributo = atributo
-        self.tipo = tipo
+    def __init__ (self, nome, descricao, valorEfeito: float, tipo: TipoItem):
+        self.__nome = nome
+        self.__descricao = descricao
+        self.__valorEfeito = valorEfeito
+        self.__tipo = tipo
 
     @property
     def nome(self):
@@ -16,15 +16,15 @@ class Item:
         return self.__descricao
     
     @property
-    def atributo(self):
-        return self.__atributo
+    def valorEfeito(self):
+        return self.__valorEfeito
     
     @property
     def tipo(self):
         return self.__tipo
 
     def __str__ (self):
-        return f"------ Item ------\nNome: {self.__nome}\nDescrição: {self.atributo}\nTipo: {self.tipo}\n"
+        return f"------ Item ------\nNome: {self.__nome}\nDescrição: {self.valorEfeito}\nTipo: {self.tipo}\n"
     
     def __eq__(self, outro):
         if not isinstance(outro, Item):

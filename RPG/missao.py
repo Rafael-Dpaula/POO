@@ -203,13 +203,11 @@ class MissaoExploracao(Missao):
         recompensa: int,
         local: str,
         distancia: float,
-        tempo_limite: int,
         status: str = Status.PENDENTE,
     ):
         super().__init__(nome, descricao, recompensa, status)
         self.local = local
         self.distancia = distancia
-        self.tempo_limite = tempo_limite
 
     @property
     def local(self):
@@ -219,9 +217,6 @@ class MissaoExploracao(Missao):
     def distancia(self):
         return self.__distancia
 
-    @property
-    def tempo_limite(self):
-        return self.__tempo_limite
 
     @local.setter
     def local(self, novoLocal: str):
@@ -235,16 +230,10 @@ class MissaoExploracao(Missao):
             raise ValueError("ERROR: a distancia deve ser maior que 0")
         self.__distancia = novaDistancia
 
-    @tempo_limite.setter
-    def tempo_limite(self, novoTempo: float):
-        if novoTempo <= 0:
-            raise ValueError("ERROR: o tempo limite deve ser maior que 0")
-        self.__tempo_limite = novoTempo
-
     def __str__(self):
         return (
             super().__str__()
-            + f"Local: {self.local}\nDistância (KM): {self.distancia}\nTempo limite: {self.tempo_limite}%\n"
+            + f"Local: {self.local}\nDistância (KM): {self.distancia}\n"
         )
 
     def concluir_missao(self, valor):
