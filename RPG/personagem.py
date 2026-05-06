@@ -13,7 +13,7 @@ class Personagem:
         self.__utilitario = None
         self.__vestimenta = None
 
-        self.vidaBase = 20
+        self.vidaBase = 20 #atributo que garante que buff de vida não seja cumulativo
         
     
     @property
