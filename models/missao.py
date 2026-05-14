@@ -1,4 +1,4 @@
-from status import Status
+from models.status import Status
 from abc import ABC, abstractmethod
 
 class Missao(ABC):

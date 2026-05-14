@@ -1,5 +1,5 @@
-from status import Status
-from tipo_item import TipoItem
+from models.status import Status
+from models.tipo_item import TipoItem
 class Personagem:
     def __init__(self, nome):
         self.nome = nome
@@ -137,21 +137,24 @@ class Personagem:
             print(f"O item '{item.nome}', já está no inventário de {self.nome}.")
 
     def remove_Item(self, item):
-        if any(i.nome == item.nome for i in self.__inventario):
-            self.__inventario.remove(item)
-            if self.__arma.nome == item.nome and item.nome == TipoItem.ARMA:
-                self.__arma = None
-
-            if self.__vestimenta.nome == item.nome and item.nome == TipoItem.VESTIMENTA:
-                self.__vestimenta = None
-
-            if self.__utilitario.nome == item.nome and item.nome == TipoItem.UTILITARIO:
-                self.__utilitario = None
-
-            
-            print(f"O item '{item.nome}', foi removido do inventário de {self.nome}")
-        else:
+        if not any(i.nome == item.nome for i in self.__inventario):
             print(f"O item '{item.nome}', não se encontra no inventário de {self.nome}")
+            return
+
+        self.__inventario.remove(item)
+
+        # Des-equipar de forma segura (evita crash quando equipamento não está definido)
+        if self.__arma is not None and self.__arma.nome == item.nome and self.__arma.tipo == TipoItem.ARMA:
+            self.__arma = None
+
+        if self.__vestimenta is not None and self.__vestimenta.nome == item.nome and self.__vestimenta.tipo == TipoItem.VESTIMENTA:
+            self.__vestimenta = None
+
+        if self.__utilitario is not None and self.__utilitario.nome == item.nome and self.__utilitario.tipo == TipoItem.UTILITARIO:
+            self.__utilitario = None
+
+        print(f"O item '{item.nome}', foi removido do inventário de {self.nome}")
+
 
     def mostrar_Inventario(self):
         for i in self.__inventario:

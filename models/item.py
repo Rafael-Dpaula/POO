@@ -1,4 +1,4 @@
-from tipo_item import TipoItem
+from models.tipo_item import TipoItem
 
 class Item:
     def __init__ (self, nome, descricao, valorEfeito: float, tipo: TipoItem):

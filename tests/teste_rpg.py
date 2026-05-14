@@ -1,6 +1,10 @@
-from personagem import Personagem
-from missao import MissaoColeta, MissaoCombate, MissaoExploracao
-from item import Item, TipoItem
+# adiciona o diretório raiz ao sys.path para garantir que os módulos sejam encontrados
+import sys, os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from models.personagem import Personagem
+from models.missao import MissaoColeta, MissaoCombate, MissaoExploracao
+from models.item import Item, TipoItem
 
 #instanciamento de Personagens
 personagem1 = Personagem("Zen")
