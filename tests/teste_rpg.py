@@ -3,7 +3,8 @@ import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from models.personagem import Personagem
-from models.missao import MissaoColeta, MissaoCombate, MissaoExploracao
+from models.missao import *
+from models.factoryMissao import FactoryMissao
 from models.item import Item, TipoItem
 
 #instanciamento de Personagens
@@ -11,36 +12,40 @@ personagem1 = Personagem("Zen")
 personagem2 = Personagem("Mark")
 
 #instanciamento de missoes
-Combate = MissaoCombate(
+Combate = FactoryMissao.criarMissao(
+    tipo_missao="combate",
     nome="Extermínio Sombrio",
     descricao="Derrote criaturas corrompidas na floresta",
     recompensa=50,
-    inimigo="Corrompido",
-    inimigos_a_derrotar=5,
+    valor_str="Corrompido",
+    valor_num=5,
 )
 
-Combate2 = MissaoCombate(
+Combate2 = FactoryMissao.criarMissao(
+    tipo_missao="combate",
     nome="Limpar a dungeon norte",
     descricao="Derrote todos as criaturas presentes no 1º andar da dungeon norte",
     recompensa=50,
-    inimigo="Goblins",
-    inimigos_a_derrotar=18,
+    valor_str="Goblins",
+    valor_num=18,
 )
 
-Exploracao = MissaoExploracao(
+Exploracao = FactoryMissao.criarMissao(
+    tipo_missao="exploracao",
     nome="Explorador de Arcadia",
     descricao="Explore a região esquecida ao norte",
     recompensa=30,
-    local="Ruínas Antigas",
-    distancia=12.5,
+    valor_str="Ruínas Antigas",
+    valor_num=12.5,
 )
 
-Coleta = MissaoColeta(
+Coleta = FactoryMissao.criarMissao(
+    tipo_missao="coleta",
     nome="Coleta de Ervas",
     descricao="Colete ervas medicinais raras",
     recompensa=15,
-    item_necessario="Erva Lunar",
-    quantidade_item=10,
+    valor_str="Erva Lunar",
+    valor_num=10,
 )
 
 #instanciamento de Itens
