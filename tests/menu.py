@@ -11,6 +11,7 @@ from models.tipo_item import TipoItem
 from models.missao import MissaoColeta, MissaoCombate, MissaoExploracao
 
 
+
 def _print_header(txt: str):
     print("\n" + "=" * 10 + f" {txt} " + "=" * 10)
 
@@ -155,7 +156,8 @@ def main():
                 elif a == 4:
                     print("\nMissoes:")
                     for m in personagem.missoes:
-                        print(f"  - {m.nome} | status={m.status.value}")
+                        print(f"  - {m.nome} | status={type(m.estado).__name__}")
+
                     if not personagem.missoes:
                         print("  (nenhuma)")
                 elif a == 5:
@@ -270,14 +272,15 @@ def main():
                 _print_header("MISSÕES")
                 print("Missoes disponíveis (para adicionar ao personagem):")
                 for i, m in enumerate(missoes_disponiveis):
-                    print(f"  {i}) {m.nome} | status={m.status.value} | recompensa={m.recompensa}")
+                    print(f"  {i}) {m.nome} | status={type(m.estado).__name__} | recompensa={m.recompensa}")
 
                 print("\nMissoes do personagem:")
                 if not personagem.missoes:
                     print("  (nenhuma)")
                 else:
                     for m in personagem.missoes:
-                        print(f"  - {m.nome} | status={m.status.value}")
+                        print(f"  - {m.nome} | status={type(m.estado).__name__}")
+
 
                 print("\n1) Adicionar missão ao personagem")
                 print("2) Concluir missão")
