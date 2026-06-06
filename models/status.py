@@ -23,7 +23,7 @@ class EstadoPendente(EstadoMissao):
         )
 
     def concluir(self, valor):
-        raise Exception("ERROR: o status da missão deve ser pendente para iniciar!")
+        raise Exception("ERROR: o status da missão deve ser andamento para concluir!")
 
 
 class EstadoAndamento(EstadoMissao):
